@@ -80,6 +80,10 @@ public class ArticlesUI extends JFrame {
         ImageIcon icon = new ImageIcon(image);
         JLabel imageLabel = new JLabel();
         imageLabel.setIcon(icon);
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(800,800,900,900);
+
     }
 
     private void loadArticlesFromFile() throws IOException {
@@ -123,12 +127,14 @@ public class ArticlesUI extends JFrame {
                     return; // do nothing
                 }
                 if (selectedArticle.equals(wordArticlesPairs.get(currentWord))) {
-                    JOptionPane.showMessageDialog(mainFrame, "Correct! " + selectedArticle + " " + currentWord, " ", JOptionPane.PLAIN_MESSAGE);
+                    ImageIcon icon = new ImageIcon(getClass().getResource("Logo_ddd.png"));
+                    JOptionPane.showMessageDialog(mainFrame, "Correct! " + selectedArticle + " " + currentWord, " ", JOptionPane.PLAIN_MESSAGE, icon);
                     correctAnswers += cookie;
                     if (articlesIterator.hasNext()) {
                         currentWord = articlesIterator.next();
                         wordLabel.setText(currentWord);
                         cookie = 1;
+
                     } else {
                         float tulemus = ((float)correctAnswers/wordArticlesPairs.size()) * 100;
                         JOptionPane.showMessageDialog(mainFrame, "Result: "+ tulemus + " %");
@@ -136,6 +142,7 @@ public class ArticlesUI extends JFrame {
                 } else {
                     JOptionPane.showMessageDialog(mainFrame, "Wrong! Try again", " ", JOptionPane.PLAIN_MESSAGE);
                     cookie = 0;
+
                 }
             }
         });
