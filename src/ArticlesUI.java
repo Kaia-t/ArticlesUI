@@ -1,4 +1,5 @@
 import com.sun.javafx.css.Stylesheet;
+import com.sun.scenario.effect.Glow;
 import javafx.scene.image.*;
 import sun.awt.image.ImageWatched;
 import sun.swing.ImageIconUIResource;
@@ -71,8 +72,7 @@ public class ArticlesUI extends JFrame {
         pack();
         // center window
         setLocationRelativeTo(null);
-        //Text font ist Verdana, size 24
-        Font font1 = new Font("Arial", Font.PLAIN, 24);
+        Font font1 = new Font("Arial Black", Font.CENTER_BASELINE, 36);
         wordLabel.setFont(font1);
         //wordLabel.setAlignmentY(100);
         File imageFile = new File("./src/Logo_ddd.png");
@@ -97,7 +97,7 @@ public class ArticlesUI extends JFrame {
 
     private JPanel createRadioPanel() {
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(300, 50));
+        panel.setPreferredSize(new Dimension(2000, 3000));
         ButtonGroup group = new ButtonGroup();
 
         for (String article : ARTICLES) {
@@ -127,7 +127,7 @@ public class ArticlesUI extends JFrame {
                     return; // do nothing
                 }
                 if (selectedArticle.equals(wordArticlesPairs.get(currentWord))) {
-                    ImageIcon icon = new ImageIcon(getClass().getResource("Logo_ddd.png"));
+                    ImageIcon icon = new ImageIcon(getClass().getResource("happy-icon.png"));
                     JOptionPane.showMessageDialog(mainFrame, "Correct! " + selectedArticle + " " + currentWord, " ", JOptionPane.PLAIN_MESSAGE, icon);
                     correctAnswers += cookie;
                     if (articlesIterator.hasNext()) {
@@ -137,10 +137,11 @@ public class ArticlesUI extends JFrame {
 
                     } else {
                         float tulemus = ((float)correctAnswers/wordArticlesPairs.size()) * 100;
-                        JOptionPane.showMessageDialog(mainFrame, "Result: "+ tulemus + " %");
+                        JOptionPane.showMessageDialog(mainFrame, "Result: "+ tulemus + " % Gut gemacht!");
                     }
                 } else {
-                    JOptionPane.showMessageDialog(mainFrame, "Wrong! Try again", " ", JOptionPane.PLAIN_MESSAGE);
+                    ImageIcon icon = new ImageIcon(getClass().getResource("sad-icon.png"));
+                    JOptionPane.showMessageDialog(mainFrame, "Wrong! Try again", " ", JOptionPane.PLAIN_MESSAGE, icon);
                     cookie = 0;
 
                 }
