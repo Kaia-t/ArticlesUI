@@ -1,3 +1,4 @@
+import com.sun.java.swing.plaf.motif.MotifInternalFrameTitlePane;
 import com.sun.javafx.css.Stylesheet;
 import com.sun.scenario.effect.Glow;
 import javafx.scene.image.*;
@@ -26,7 +27,7 @@ import static java.awt.Color.*;
 public class ArticlesUI extends JFrame {
 
     private Font font;
-    private static final String[] ARTICLES = new String[] {"der","die","das"};
+    public static final String[] ARTICLES = new String[] {"der","die","das"};
     private static final String ARTICLES_FILE = "./src/Sonad/sonad.txt";
 
     private static JFrame mainFrame;
@@ -46,10 +47,10 @@ public class ArticlesUI extends JFrame {
     private BorderLayout Layout;
     private Dimension labelSize;
 
+
     public ArticlesUI() throws IOException {
         setTitle("DerDieDasGame");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         loadArticlesFromFile();
         articlesIterator = wordArticlesPairs.keySet().iterator();
         currentWord = articlesIterator.next();
@@ -58,11 +59,13 @@ public class ArticlesUI extends JFrame {
         Layout.setHgap(100);
         Layout.setVgap(100);
 
-        labelSize.height = 200;
+        labelSize.height = 1000;
         JPanel panel = new JPanel(Layout);
-        //panel.setSize(3500, 3900);
-        panel.setBorder(new EmptyBorder(200, 200, 200, 200)); // padding
+        panel.setSize(900, 900);
+        panel.setBorder(new EmptyBorder(200, 200, 200, 200)); // padding ehk raam
         panel.setBackground(WHITE);
+        Font font1 = new Font("Verdana", Font.BOLD, 60);
+        panel.setFont(font1);
 
         wordLabel = new JLabel(currentWord);
         panel.add(wordLabel, BorderLayout.NORTH);
@@ -70,26 +73,23 @@ public class ArticlesUI extends JFrame {
         panel.add(createAnswerButton(), BorderLayout.SOUTH);
         setContentPane(panel);
         pack();
-        // center window
         setLocationRelativeTo(null);
-        Font font1 = new Font("Arial Black", Font.CENTER_BASELINE, 36);
         wordLabel.setFont(font1);
         //wordLabel.setAlignmentY(100);
-        File imageFile = new File("./src/Logo_ddd.png");
-        Image image = ImageIO.read(imageFile);
-        ImageIcon icon = new ImageIcon(image);
-        JLabel imageLabel = new JLabel();
-        imageLabel.setIcon(icon);
+        // File imageFile = new File("./src/Logo_ddd.png");
+        //Image image = ImageIO.read(imageFile);
+        //ImageIcon icon = new ImageIcon(image);
+        //JLabel imageLabel = new JLabel();
+        //imageLabel.setIcon(icon);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(800,800,900,900);
+        setBounds(900,900,900,900);
 
     }
 
     private void loadArticlesFromFile() throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(ARTICLES_FILE));
         for (int i = 0; i < 10; i++) {
-            //System.out.println(br.readLine());
             wordArticlesPairs.put(reader.readLine(), reader.readLine());
         }
         reader.close();
@@ -97,7 +97,8 @@ public class ArticlesUI extends JFrame {
 
     private JPanel createRadioPanel() {
         JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(2000, 3000));
+        panel.setPreferredSize(new Dimension(5000, 5000));
+        panel.setBackground(LIGHT_GRAY);
         ButtonGroup group = new ButtonGroup();
 
         for (String article : ARTICLES) {
@@ -119,7 +120,10 @@ public class ArticlesUI extends JFrame {
     //private static final String Image = "./src/Logo_ddd.png";
     //ImageIconUIResource icon = new ImageIconUIResource(100[];
     private JButton createAnswerButton() {
-        JButton button = new JButton("Answer");
+        JButton button = new JButton("Vastus");
+        button.setBackground(YELLOW);
+        button.setForeground(BLUE);
+
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -127,8 +131,8 @@ public class ArticlesUI extends JFrame {
                     return; // do nothing
                 }
                 if (selectedArticle.equals(wordArticlesPairs.get(currentWord))) {
-                    ImageIcon icon = new ImageIcon(getClass().getResource("happy-icon.png"));
-                    JOptionPane.showMessageDialog(mainFrame, "Correct! " + selectedArticle + " " + currentWord, " ", JOptionPane.PLAIN_MESSAGE, icon);
+                   // ImageIcon icon = new ImageIcon(getClass().getResource("happy-icon.png")); võtsin iconi allolevalt realt ka ära
+                    JOptionPane.showMessageDialog(mainFrame, "Correct! " + selectedArticle + " " + currentWord, " ", JOptionPane.PLAIN_MESSAGE);
                     correctAnswers += cookie;
                     if (articlesIterator.hasNext()) {
                         currentWord = articlesIterator.next();
@@ -140,8 +144,8 @@ public class ArticlesUI extends JFrame {
                         JOptionPane.showMessageDialog(mainFrame, "Result: "+ tulemus + " % Gut gemacht!");
                     }
                 } else {
-                    ImageIcon icon = new ImageIcon(getClass().getResource("sad-icon.png"));
-                    JOptionPane.showMessageDialog(mainFrame, "Wrong! Try again", " ", JOptionPane.PLAIN_MESSAGE, icon);
+                    //ImageIcon icon = new ImageIcon(getClass().getResource("sad-icon.png"));
+                    JOptionPane.showMessageDialog(mainFrame, "Wrong! Try again", " ", JOptionPane.PLAIN_MESSAGE);
                     cookie = 0;
 
                 }
